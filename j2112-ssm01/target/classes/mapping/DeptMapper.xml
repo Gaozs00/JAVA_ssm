@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.j2112.mapper.DeptMapper">
+
+<!--    查所有-->
+    <sql id="dept_column">
+        deptno,
+        dname,
+        loc
+    </sql>
+    <select id="findDepts" resultType="com.qf.j2112.po.Dept">
+        select
+        <include refid="dept_column"></include>
+        from
+        dept
+    </select>
+<!--    增-->
+    <insert id="addDept" parameterType="com.qf.j2112.po.Dept">
+        <selectKey resultType="int" keyProperty="deptno" keyColumn="deptno" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        insert into dept values(0,#{dname},#{loc})
+    </insert>
+<!--    改-->
+    <update id="updateDept" parameterType="com.qf.j2112.po.Dept">
+        update  dept set dname=#{dname},loc=#{loc} where deptno =#{deptno}
+    </update>
+<!--    删-->
+    <delete id="deleteDept" parameterType="int">
+        delete from dept where deptno = #{id}
+    </delete>
+</mapper>
